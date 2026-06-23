@@ -21,10 +21,9 @@ func main() {
 	assetsHandler := http.StripPrefix("/assets/", http.FileServer(http.Dir("assets")))
 	mux.Handle("/assets/", assetsHandler)
 
-	mux.HandleFunc("/healthz", handlerReadiness)
-	mux.HandleFunc("/metrics", apiCfg.handlerMetrics)
-	mux.HandleFunc("/reset", apiCfg.handlerReset)
-
+	mux.HandleFunc("GET /healthz", handlerReadiness)
+	mux.HandleFunc("GET /metrics", apiCfg.handlerMetrics)
+	mux.HandleFunc("POST /reset", apiCfg.handlerReset)
 	srv := &http.Server{
 		Addr:    ":8080",
 		Handler: mux,
